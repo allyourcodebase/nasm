@@ -514,6 +514,9 @@
 /* Define to 1 if you have the `_fullpath' function. */
 #undef HAVE__FULLPATH
 
+/* Define to 1 if you have the `_filelengthi64' function. */
+#undef HAVE__FILELENGTHI64
+
 /* Define to 1 if you have the `_stati64' function. */
 #undef HAVE__STATI64
 
