@@ -1,7 +1,23 @@
-This is a fork of [NASM](https://nasm.us/), packaged for Zig. Unnecessary files
+# NASM
+
+This is NASM, packaged for [Zig](https://ziglang.org/). Unnecessary files
 have been deleted, and the build system has been replaced with `build.zig`.
 
-Original README follows:
+## Support
+
+| OS      | Status |
+|---------|--------|
+| Linux   | ✅     |
+| macOS   | ✅     |
+| Windows | ✅     |
+
+| Zig version | Status |
+|-------------|--------|
+| zig 0.14.0  | ✅     |
+
+This is a fork of [NASM](https://nasm.us/), packaged for Zig.
+
+## Original README
 
 ----------------------------------------------------------------------------
 

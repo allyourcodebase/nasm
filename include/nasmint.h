@@ -33,7 +33,7 @@
 # endif
 #endif
 
-#if _I64_MAX == 9223372036854775807
+#if defined(_MSC_VER) && _I64_MAX == 9223372036854775807
 
 /* Windows-based compiler: use __int64 */
 typedef signed __int64		int64_t;
