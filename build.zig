@@ -8,8 +8,10 @@ pub fn build(b: *std.Build) void {
 
     const exe = b.addExecutable(.{
         .name = "nasm",
-        .target = target,
-        .optimize = optimize,
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+        }),
     });
 
     exe.addIncludePath(b.path("include"));
@@ -28,7 +30,7 @@ pub fn build(b: *std.Build) void {
         .NASM_VER = "2.16.01",
     }));
     exe.addConfigHeader(b.addConfigHeader(.{
-        .style = .{ .autoconf = b.path("config/config.h.in") },
+        .style = .{ .autoconf_undef = b.path("config/config.h.in") },
         .include_path = "config/config.h",
     }, .{
         .ABORT_ON_PANIC = have(optimize == .Debug),
