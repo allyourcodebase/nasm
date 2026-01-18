@@ -1,8 +1,8 @@
 .{
     .name = .nasm,
-    .version = "2.16.1-4",
+    .version = "2.16.1-5",
     .fingerprint = 0x84b9c9eb77047d27,
-    .minimum_zig_version = "0.14.0",
+    .minimum_zig_version = "0.16.0-dev.2267+27e8d05ee",
     .paths = .{
         "LICENSE",
         "README.md",

@@ -11,14 +11,15 @@ pub fn build(b: *std.Build) void {
         .root_module = b.createModule(.{
             .target = target,
             .optimize = optimize,
+            .link_libc = true,
         }),
     });
 
-    exe.addIncludePath(b.path("include"));
-    exe.addIncludePath(b.path("asm"));
-    exe.addIncludePath(b.path("x86"));
-    exe.addIncludePath(b.path("output"));
-    exe.addConfigHeader(b.addConfigHeader(.{
+    exe.root_module.addIncludePath(b.path("include"));
+    exe.root_module.addIncludePath(b.path("asm"));
+    exe.root_module.addIncludePath(b.path("x86"));
+    exe.root_module.addIncludePath(b.path("output"));
+    exe.root_module.addConfigHeader(b.addConfigHeader(.{
         .style = .blank,
         .include_path = "version.h",
     }, .{
@@ -29,7 +30,7 @@ pub fn build(b: *std.Build) void {
         .NASM_VERSION_ID = 0x02100100,
         .NASM_VER = "2.16.01",
     }));
-    exe.addConfigHeader(b.addConfigHeader(.{
+    exe.root_module.addConfigHeader(b.addConfigHeader(.{
         .style = .{ .autoconf_undef = b.path("config/config.h.in") },
         .include_path = "config/config.h",
     }, .{
@@ -341,11 +342,10 @@ pub fn build(b: *std.Build) void {
         "-std=c17",
         "-Wno-implicit-function-declaration",
     };
-    exe.addCSourceFiles(.{
+    exe.root_module.addCSourceFiles(.{
         .files = &files,
         .flags = &flags,
     });
-    exe.linkLibC();
     b.installArtifact(exe);
 }
 
