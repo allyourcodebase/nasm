@@ -341,6 +341,7 @@ pub fn build(b: *std.Build) void {
         "-DHAVE_CONFIG_H",
         "-std=c17",
         "-Wno-implicit-function-declaration",
+        "-fwrapv",
     };
     exe.root_module.addCSourceFiles(.{
         .files = &files,
