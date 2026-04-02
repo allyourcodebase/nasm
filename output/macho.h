@@ -1,35 +1,5 @@
-/* ----------------------------------------------------------------------- *
- *
- *   Copyright 1996-2018 The NASM Authors - All Rights Reserved
- *   See the file AUTHORS included with the NASM distribution for
- *   the specific copyright holders.
- *
- *   Redistribution and use in source and binary forms, with or without
- *   modification, are permitted provided that the following
- *   conditions are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer in the documentation and/or other materials provided
- *     with the distribution.
- *
- *     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
- *     CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
- *     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- *     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- *     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- *     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- *     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- *     HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- *     CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- *     OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- *     EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * ----------------------------------------------------------------------- */
+/* SPDX-License-Identifier: BSD-2-Clause */
+/* Copyright 1996-2018 The NASM Authors - All Rights Reserved */
 
 #ifndef OUTPUT_MACHO_H
 #define OUTPUT_MACHO_H
@@ -60,6 +30,7 @@
 #define LC_SEGMENT			0x1
 #define LC_SEGMENT_64			0x19
 #define LC_SYMTAB			0x2
+#define LC_BUILD_VERSION		0x32
 
 /* Symbol type bits */
 #define N_STAB				0xe0
@@ -149,6 +120,24 @@
 #define VM_PROT_READ			0x01
 #define VM_PROT_WRITE			0x02
 #define VM_PROT_EXECUTE			0x04
+
+/* Platforms */
+/* X-macro X(_platform, _id, _name) */
+#define MACHO_ALL_PLATFORMS \
+	X(PLATFORM_UNKNOWN, 0, "unknown") \
+	X(PLATFORM_MACOS, 1, "macos") \
+	X(PLATFORM_IOS, 2, "ios") \
+	X(PLATFORM_TVOS, 3, "tvos") \
+	X(PLATFORM_WATCHOS, 4, "watchos") \
+	X(PLATFORM_BRIDGEOS, 5, "bridgeos") \
+	X(PLATFORM_MACCATALYST, 6, "macCatalyst") \
+	X(PLATFORM_IOSSIMULATOR, 7, "iossimulator") \
+	X(PLATFORM_TVOSSIMULATOR, 8, "tvossimulator") \
+	X(PLATFORM_WATCHOSSIMULATOR, 9, "watchossimulator") \
+	X(PLATFORM_DRIVERKIT, 10, "driverkit") \
+	X(PLATFORM_XROS, 11, "xros") \
+	X(PLATFORM_XROS_SIMULATOR, 12, "xrsimulator") \
+	/* end */
 
 typedef struct {
 	uint32_t	magic;
@@ -278,5 +267,21 @@ typedef struct {
 	uint16_t	n_desc;
 	uint64_t	n_value;
 } macho_nlist_64_t;
+
+/* Adapted from LLVM include/llvm/BinaryFormat/MachO.h */
+typedef struct {
+	uint32_t	tool;
+	uint32_t	version;
+} macho_build_tool_version_t;
+
+typedef struct {
+	uint32_t	cmd;
+	uint32_t	cmdsize;
+	uint32_t	platform;
+	uint32_t	minos;		/* x.y.z is 0xXXXXYYZZ */
+	uint32_t	sdk;		/* x.y.z is 0xXXXXYYZZ */
+	uint32_t	ntools;
+	/* ntools macho_build_tool_version_t follow this */
+} macho_build_version_command_t;
 
 #endif /* OUTPUT_MACHO_H */
