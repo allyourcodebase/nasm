@@ -1,6 +1,6 @@
 .{
     .name = .nasm,
-    .version = "2.16.1-5",
+    .version = "3.1.0",
     .dependencies = .{
         .zlib = .{
             .url = "git+https://github.com/allyourcodebase/zlib#c5115f4b69ef660f72a835c6638f80508ef284c7",
