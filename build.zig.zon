@@ -1,6 +1,12 @@
 .{
     .name = .nasm,
     .version = "2.16.1-5",
+    .dependencies = .{
+        .zlib = .{
+            .url = "git+https://github.com/allyourcodebase/zlib#c5115f4b69ef660f72a835c6638f80508ef284c7",
+            .hash = "zlib-1.3.1-1-ZZQ7ldENAAA7qJjUXP6E6xnRuV-jDL9dyoJFc_eb3zQ6",
+        },
+    },
     .fingerprint = 0x84b9c9eb77047d27,
     .minimum_zig_version = "0.16.0-dev.2267+27e8d05ee",
     .paths = .{

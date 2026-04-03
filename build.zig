@@ -7,6 +7,11 @@ pub fn build(b: *std.Build) void {
     const t = target.result;
     const is_macos = t.os.tag.isDarwin();
 
+    const zlib_dep = b.dependency("zlib", .{
+        .target = target,
+        .optimize = optimize,
+    });
+
     const exe = b.addExecutable(.{
         .name = "nasm",
         .root_module = b.createModule(.{
@@ -15,6 +20,7 @@ pub fn build(b: *std.Build) void {
             .link_libc = true,
         }),
     });
+    exe.root_module.linkLibrary(zlib_dep.artifact("z"));
     exe.link_function_sections = true;
     exe.link_data_sections = true;
 
@@ -27,12 +33,12 @@ pub fn build(b: *std.Build) void {
         .style = .blank,
         .include_path = "version.h",
     }, .{
-        .NASM_MAJOR_VER = 2,
-        .NASM_MINOR_VER = 16,
-        .NASM_SUBMINOR_VER = 1,
+        .NASM_MAJOR_VER = 3,
+        .NASM_MINOR_VER = 1,
+        .NASM_SUBMINOR_VER = 0,
         .NASM_PATCHLEVEL_VER = 0,
-        .NASM_VERSION_ID = 0x02100100,
-        .NASM_VER = "2.16.01",
+        .NASM_VERSION_ID = 0x03010000,
+        .NASM_VER = "3.01",
     }));
     exe.root_module.addConfigHeader(b.addConfigHeader(.{
         .style = .{ .autoconf_undef = b.path("config/config.h.in") },
