@@ -18,6 +18,7 @@ pub fn build(b: *std.Build) void {
     exe.link_function_sections = true;
     exe.link_data_sections = true;
 
+    exe.root_module.addIncludePath(b.path("."));
     exe.root_module.addIncludePath(b.path("include"));
     exe.root_module.addIncludePath(b.path("asm"));
     exe.root_module.addIncludePath(b.path("x86"));
@@ -291,6 +292,7 @@ pub fn build(b: *std.Build) void {
         "nasmlib/asprintf.c",
         "nasmlib/badenum.c",
         "nasmlib/bsi.c",
+        "nasmlib/crc32b.c",
         "nasmlib/crc64.c",
         "nasmlib/file.c",
         "nasmlib/filename.c",
@@ -298,6 +300,7 @@ pub fn build(b: *std.Build) void {
         "nasmlib/ilog2.c",
         "nasmlib/md5c.c",
         "nasmlib/mmap.c",
+        "nasmlib/numstr.c",
         "nasmlib/nctype.c",
         "nasmlib/path.c",
         "nasmlib/perfhash.c",
@@ -320,6 +323,7 @@ pub fn build(b: *std.Build) void {
         "asm/exprdump.c",
         "asm/exprlib.c",
         "asm/floats.c",
+        "asm/getbool.c",
         "asm/labels.c",
         "asm/listing.c",
         "asm/nasm.c",
@@ -334,6 +338,7 @@ pub fn build(b: *std.Build) void {
         "asm/stdscan.c",
         "asm/strfunc.c",
         "asm/tokhash.c",
+        "asm/uncompress.c",
         "asm/warnings.c",
 
         "stdlib/snprintf.c",
