@@ -7,6 +7,13 @@ pub fn build(b: *std.Build) void {
     const strip = b.option(bool, "strip", "Omit debug information");
     const sanitize_thread = b.option(bool, "sanitize_thread", "Enable thread sanitizer");
 
+    const zlib_dep = b.dependency("zlib", .{
+        .target = target,
+        .optimize = optimize,
+    });
+
+    const zlib = zlib_dep.artifact("z");
+
     const upstream = b.dependency("nasm", .{});
 
     const have_htole = if (target.result.os.tag != .windows and !target.result.os.tag.isDarwin()) true else null;
@@ -313,23 +320,10 @@ pub fn build(b: *std.Build) void {
     b.installArtifact(nasm);
     for (include_paths) |path| nasm.root_module.addIncludePath(path);
     nasm.root_module.linkLibrary(nasm_common);
-    nasm.root_module.addIncludePath(upstream.path("zlib"));
+    nasm.root_module.linkLibrary(zlib);
     nasm.root_module.addCSourceFiles(.{
         .root = upstream.path("asm"),
         .files = nasm_asm_sources,
-        .flags = flags,
-    });
-    nasm.root_module.addCSourceFiles(.{
-        .root = upstream.path("zlib"),
-        .files = &.{
-            "adler32.c",
-            "crc32.c",
-            "infback.c",
-            "inffast.c",
-            "inflate.c",
-            "inftrees.c",
-            "zutil.c",
-        },
         .flags = flags,
     });
 

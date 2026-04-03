@@ -8,6 +8,10 @@
             .url = "https://www.nasm.us/pub/nasm/releasebuilds/3.01/nasm-3.01.tar.gz",
             .hash = "N-V-__8AAEAMKAFrNesgN6ZM9sxj37fq_i7UJe5nKkLmyRJI",
         },
+        .zlib = .{
+            .url = "git+https://github.com/allyourcodebase/zlib.git#c5115f4b69ef660f72a835c6638f80508ef284c7",
+            .hash = "zlib-1.3.1-1-ZZQ7ldENAAA7qJjUXP6E6xnRuV-jDL9dyoJFc_eb3zQ6",
+        },
     },
     .paths = .{
         "build.zig.zon",
