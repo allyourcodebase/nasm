@@ -38,7 +38,8 @@ jobs:
       - run: zig build -Dtarget=x86-linux-musl
       - run: zig build -Dtarget=loongarch64-linux-musl
       - run: zig build -Dtarget=s390x-linux-musl
-      - run: zig build -Dtarget=wasm32-wasi -Doptimize=ReleaseFast # ubsan rt fails to build in Debug
+      - run: zig build -Dtarget=wasm32-wasi
+      - run: zig build -Dtarget=wasm32-wasi -Doptimize=ReleaseFast
       - run: zig build -Dtarget=x86_64-linux-gnu
       - run: zig build -Dtarget=x86-linux-gnu
       - run: zig build -Dtarget=aarch64-linux-gnu
@@ -54,13 +55,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - uses: mlugg/setup-zig@v2
         with:
           version: latest
 
-      - name: Install Wine
+      - name: Install wine
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo dpkg --add-architecture i386
@@ -70,6 +71,10 @@ jobs:
           sudo apt -qq update
           sudo apt -qq install --install-recommends winehq-stable -y
           wine --version
+
+      - name: Install wasmtime
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
+        uses: bytecodealliance/actions/wasmtime/setup@v1
 
       - name: Test
         if: matrix.os == 'ubuntu-latest'
@@ -83,3 +88,7 @@ jobs:
         if: matrix.os != 'ubuntu-latest'
         # this will only assemble the files on macos
         run: zig build test
+
+      - name: Test (wasmtime)
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
+        run: zig build test -fwasmtime
