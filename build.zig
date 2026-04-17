@@ -346,6 +346,10 @@ pub fn build(b: *std.Build) void {
         // elf64 test
         const run_nasm = b.addRunArtifact(nasm);
         test_step.dependOn(&run_nasm.step);
+        if (target.result.os.tag == .wasi) {
+            // we need all files in the Zig cache to be accessible in the WASI sandbox
+            run_nasm.setCwd(.{ .cwd_relative = "/" });
+        }
         run_nasm.addArg("-f");
         run_nasm.addArg("elf64");
         run_nasm.addFileArg(upstream.path("test/elf64so.asm"));
@@ -380,6 +384,10 @@ pub fn build(b: *std.Build) void {
         // coff test
         const run_nasm = b.addRunArtifact(nasm);
         test_step.dependOn(&run_nasm.step);
+        if (target.result.os.tag == .wasi) {
+            // we need all files in the Zig cache to be accessible in the WASI sandbox
+            run_nasm.setCwd(.{ .cwd_relative = "/" });
+        }
         run_nasm.addArg("-f");
         run_nasm.addArg("win32");
         run_nasm.addFileArg(upstream.path("test/cofftest.asm"));
