@@ -4,6 +4,9 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
+    const enable_nasm = b.option(bool, "enable_nasm", "Install nasm artifact (defaults to true)") orelse true;
+    const enable_ndisasm = b.option(bool, "enable_ndisasm", "Install ndisasm artifact (defaults to false)") orelse false;
+
     const strip = b.option(bool, "strip", "Omit debug information");
     const sanitize_thread = b.option(bool, "sanitize_thread", "Enable thread sanitizer");
 
@@ -317,7 +320,7 @@ pub fn build(b: *std.Build) void {
         .name = "nasm",
         .root_module = b.createModule(mod_options),
     });
-    b.installArtifact(nasm);
+    if (enable_nasm) b.installArtifact(nasm);
     for (include_paths) |path| nasm.root_module.addIncludePath(path);
     nasm.root_module.linkLibrary(nasm_common);
     nasm.root_module.linkLibrary(zlib);
@@ -331,7 +334,7 @@ pub fn build(b: *std.Build) void {
         .name = "ndisasm",
         .root_module = b.createModule(mod_options),
     });
-    b.installArtifact(ndisasm);
+    if (enable_ndisasm) b.installArtifact(ndisasm);
     for (include_paths) |path| ndisasm.root_module.addIncludePath(path);
     ndisasm.root_module.linkLibrary(nasm_common);
     ndisasm.root_module.addCSourceFiles(.{

@@ -22,31 +22,31 @@ jobs:
       - name: Check Formatting
         run: zig fmt --ast-check --check .
 
-      - run: zig build -Dtarget=x86_64-windows-gnu
-      - run: zig build -Dtarget=x86_64-windows-gnu -Doptimize=ReleaseFast
-      - run: zig build -Dtarget=aarch64-windows-gnu
-      - run: zig build -Dtarget=x86-windows-gnu
-      - run: zig build -Dtarget=x86_64-macos-none
-      - run: zig build -Dtarget=aarch64-macos-none
-      - run: zig build -Dtarget=aarch64-macos-none -Doptimize=ReleaseFast
-      - run: zig build -Dtarget=x86_64-linux-musl
-      - run: zig build -Dtarget=x86_64-linux-musl -Doptimize=ReleaseFast
-      - run: zig build -Dtarget=aarch64-linux-musl
-      - run: zig build -Dtarget=arm-linux-musleabihf
-      - run: zig build -Dtarget=riscv64-linux-musl
-      - run: zig build -Dtarget=powerpc64le-linux-musl
-      - run: zig build -Dtarget=x86-linux-musl
-      - run: zig build -Dtarget=loongarch64-linux-musl
-      - run: zig build -Dtarget=s390x-linux-musl
-      - run: zig build -Dtarget=wasm32-wasi
-      - run: zig build -Dtarget=wasm32-wasi -Doptimize=ReleaseFast
-      - run: zig build -Dtarget=x86_64-linux-gnu
-      - run: zig build -Dtarget=x86-linux-gnu
-      - run: zig build -Dtarget=aarch64-linux-gnu
-      - run: zig build -Dtarget=x86_64-freebsd-none
-      - run: zig build -Dtarget=aarch64-freebsd-none
-      - run: zig build -Dtarget=x86_64-netbsd-none
-      - run: zig build -Dtarget=aarch64-netbsd-none
+      - run: zig build -Denable_ndisasm -Dtarget=x86_64-windows-gnu
+      - run: zig build -Denable_ndisasm -Dtarget=x86_64-windows-gnu -Doptimize=ReleaseFast
+      - run: zig build -Denable_ndisasm -Dtarget=aarch64-windows-gnu
+      - run: zig build -Denable_ndisasm -Dtarget=x86-windows-gnu
+      - run: zig build -Denable_ndisasm -Dtarget=x86_64-macos-none
+      - run: zig build -Denable_ndisasm -Dtarget=aarch64-macos-none
+      - run: zig build -Denable_ndisasm -Dtarget=aarch64-macos-none -Doptimize=ReleaseFast
+      - run: zig build -Denable_ndisasm -Dtarget=x86_64-linux-musl
+      - run: zig build -Denable_ndisasm -Dtarget=x86_64-linux-musl -Doptimize=ReleaseFast
+      - run: zig build -Denable_ndisasm -Dtarget=aarch64-linux-musl
+      - run: zig build -Denable_ndisasm -Dtarget=arm-linux-musleabihf
+      - run: zig build -Denable_ndisasm -Dtarget=riscv64-linux-musl
+      - run: zig build -Denable_ndisasm -Dtarget=powerpc64le-linux-musl
+      - run: zig build -Denable_ndisasm -Dtarget=x86-linux-musl
+      - run: zig build -Denable_ndisasm -Dtarget=loongarch64-linux-musl
+      - run: zig build -Denable_ndisasm -Dtarget=s390x-linux-musl
+      - run: zig build -Denable_ndisasm -Dtarget=wasm32-wasi
+      - run: zig build -Denable_ndisasm -Dtarget=wasm32-wasi -Doptimize=ReleaseFast
+      - run: zig build -Denable_ndisasm -Dtarget=x86_64-linux-gnu
+      - run: zig build -Denable_ndisasm -Dtarget=x86-linux-gnu
+      - run: zig build -Denable_ndisasm -Dtarget=aarch64-linux-gnu
+      - run: zig build -Denable_ndisasm -Dtarget=x86_64-freebsd-none
+      - run: zig build -Denable_ndisasm -Dtarget=aarch64-freebsd-none
+      - run: zig build -Denable_ndisasm -Dtarget=x86_64-netbsd-none
+      - run: zig build -Denable_ndisasm -Dtarget=aarch64-netbsd-none
 
   test:
     strategy:
